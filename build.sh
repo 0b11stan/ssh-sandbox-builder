@@ -3,16 +3,17 @@ CTR_BUILDER_NAME=ssh-sandbox-builder
 TEMPLATE_DOCKERFILE="Dockerfile.template"
 TARGET_DOCKERFILE="Dockerfile"
 PACKAGES="curl nmap-ncat"
-APPS="ls curl ncat"
+APPS="sh ls curl ncat"
 
-cp $TEMPLATE_DOCKERFILE $TARGET_DOCKERFILE
-
+ctr_create() {
+  podman run --detach --rm --name $CTR_BUILDER_NAME alpine sh -c \
+    'while true; do sleep 1000; done'
+}
 
 ctr_exec() {
   podman exec $CTR_BUILDER_NAME /bin/sh -c "$1"
 }
 
-APPS=$(ctr_exec "which $APPS")
 
 get_libs() {
   for app in $1; do
@@ -21,8 +22,13 @@ get_libs() {
     | sed 's!^[^/]*\(/[^ ]*\) .*!\1!' | sort -u
 }
 
-#podman run -d --rm --name $CTR_BUILDER_NAME alpine sh -c 'while true; do sleep 1000; done'
-#podman exec $CTR_BUILDER_NAME /bin/sh -c  "apk add $PACKAGES"
+cp $TEMPLATE_DOCKERFILE $TARGET_DOCKERFILE
+
+ctr_create
+
+ctr_exec "apk add $PACKAGES"
+
+APPS=$(ctr_exec "which $APPS")
 
 # Get all required libs
 LIBS=$(get_libs "$APPS")
@@ -40,5 +46,5 @@ done | sort -u >> $TARGET_DOCKERFILE
 
 echo "ENV PATH=$(echo $APPS | tr ' ' ':')" >> $TARGET_DOCKERFILE
 
-#podman stop --time 1 $CTR_BUILDER_NAME 2> /dev/null
-#podman rm $CTR_BUILDER_NAME
+podman stop --time 1 $CTR_BUILDER_NAME 2> /dev/null
+podman rm $CTR_BUILDER_NAME

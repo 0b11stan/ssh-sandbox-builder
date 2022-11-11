@@ -1,10 +1,7 @@
 FROM alpine
 
-RUN mkdir /chroot
-WORKDIR /chroot
-
-# install ncat
-RUN apk add nmap-ncat
+ARG USERNAME=sandbox
+ARG PASSWORD=changeme
 
 # install openssh
 RUN apk add openssh
@@ -12,17 +9,10 @@ COPY sshd_config /etc/ssh/sshd_config
 RUN /usr/bin/ssh-keygen -A
 
 # add secure user
-RUN adduser -s /sh --disabled-password -H bifrost
-
-#COPY pass.txt /root/pass.txt
-RUN echo 'bifrost:rainbow' > /root/pass.txt \
+RUN adduser -s /bin/sh --disabled-password -H $USERNAME
+RUN echo $USERNAME:$PASSWORD > /root/pass.txt \
   && chpasswd < /root/pass.txt \
   && rm /root/pass.txt
-
-# make bins available
-RUN mkdir /chroot/lib \
-  && cp /lib/ld-musl-x86_64.so.1 /chroot/lib/ \
-  && cp /bin/sh /chroot/sh
 
 # run ssh in foreground
 CMD /usr/sbin/sshd -D
