@@ -2,22 +2,25 @@
 
 ## Usage
 
-Build the sandbox's Dockerfile
+Modify variables at the start of `build.sh` then run the script.
 
 ```bash
 ./build.sh
 ```
 
-Buid the sandbox's image
+You can now build the sandbox's image:
 
 ```bash
-podman build --tag sandbox .
+podman build \
+  --build-arg "USERNAME=sandboxuser" \
+  --build-arg "PASSWORD=sandboxpassword" \
+  --tag sandbox .
 ```
 
 Run your sandbox
 
 ```bash
-podman run --rm --name sandbox -p 2222:22 --detach sandbox
+podman run --rm --name sandbox --publish 2222:22 --detach sandbox
 ```
 
 Enter you sandbox
@@ -28,5 +31,5 @@ ssh -p 2222 sandbox@localhost
 
 ## Todos
 
-* refactor build.sh
 * make multistage container to avoid double binaries
+* find a nice sandalone way to remove username:password from build arg
