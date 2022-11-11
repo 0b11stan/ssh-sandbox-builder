@@ -29,6 +29,10 @@ Enter you sandbox
 ssh -p 2222 sandbox@localhost
 ```
 
+## Dev
+
+Use the [Makefile](./Makefile).
+
 ## Todos
 
 * make multistage container to avoid double binaries
