@@ -13,7 +13,7 @@ run: image
 	podman run --rm --name sandbox -p 2222:22 --detach sandbox
 
 ssh: run
-	ssh -p 2222 sandbox@localhost
+	ssh -o 'StrictHostKeyChecking accept-new' -p 2222 sandbox@localhost
 
 exec:
 	podman exec -it sandbox /bin/sh
