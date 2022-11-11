@@ -37,3 +37,5 @@ Use the [Makefile](./Makefile).
 
 * make multistage container to avoid double binaries
 * find a nice sandalone way to remove username:password from build arg
+* take arguments from command line
+* make it work with podman or docker

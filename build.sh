@@ -1,5 +1,6 @@
+# ./build.sh -u username -p password -a nmap-ncat -b 'bin1 bin2 bin3' -e '/etc/resolv.conf /etc/httpd'
 PACKAGES="nmap-ncat"
-BINS="sh ls curl ncat"
+BINS="sh ls ncat"
 EXTRA="/etc/resolv.conf"
 DOCKERFILE_IN="Dockerfile.template"
 DOCKERFILE_OUT="Dockerfile"
