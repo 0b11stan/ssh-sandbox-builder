@@ -19,4 +19,4 @@ exec:
 	podman exec -it sandbox /bin/sh
 
 clean:
-	rm Dockerfile
+	-rm Dockerfile
