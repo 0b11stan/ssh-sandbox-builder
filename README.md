@@ -1,6 +1,6 @@
 # SSH Sandbox Builder
 
-[![asciicast](https://asciinema.org/a/Ctp7iDIXfo6N8urAUJ93MBRHU.svg)](https://asciinema.org/a/Ctp7iDIXfo6N8urAUJ93MBRHU?speed=2&idleTimeLimit=1)
+[![asciicast](https://asciinema.org/a/546700.svg)](https://asciinema.org/a/546700?speed=2&i=1)
 
 ## Usage
 
