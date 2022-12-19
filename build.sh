@@ -1,4 +1,4 @@
-# ./build.sh -u username -p password -a nmap-ncat -b 'bin1 bin2 bin3' -e '/etc/resolv.conf /etc/httpd'
+CTRTECH="podman"
 PACKAGES="nmap-ncat"
 BINS="sh ls ncat"
 EXTRA="/etc/resolv.conf"
@@ -8,18 +8,18 @@ DOCKERFILE_OUT="Dockerfile"
 CONTAINER_NAME=ssh-sandbox-builder
 
 container_execute() {
-  podman exec $CONTAINER_NAME /bin/sh -c "$1"
+  $CTRTECH exec $CONTAINER_NAME /bin/sh -c "$1"
 }
 
 prepare_container() {
-  podman run --detach --rm --name $CONTAINER_NAME alpine sh -c \
+  $CTRTECH run --detach --rm --name $CONTAINER_NAME alpine sh -c \
     'while true; do sleep 1000; done'
   container_execute "apk add $PACKAGES"
 }
 
 destroy_container() {
-  podman stop --time 1 $CONTAINER_NAME 2> /dev/null
-  podman rm $CONTAINER_NAME
+  $CTRTECH stop --time 1 $CONTAINER_NAME 2> /dev/null
+  $CTRTECH rm $CONTAINER_NAME
 }
 
 extract_libs() {
