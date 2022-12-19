@@ -1,5 +1,7 @@
 # SSH Sandbox Builder
 
+[![asciicast](https://asciinema.org/a/Ctp7iDIXfo6N8urAUJ93MBRHU.svg)](https://asciinema.org/a/Ctp7iDIXfo6N8urAUJ93MBRHU?speed=2&idleTimeLimit=1)
+
 ## Usage
 
 The `./ssb.sh` script create a default sandbox where you can only use `ls` in a
